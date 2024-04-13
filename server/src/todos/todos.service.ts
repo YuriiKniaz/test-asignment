@@ -24,6 +24,19 @@ export class TodosService {
     return await this.todoRepopsitory.save(newTodo);
   }
 
+  async updateStatus(
+    id: number,
+    status: 'Pending' | 'In Progress' | 'Done',
+  ): Promise<Todo> {
+    const statusUpdate = await this.todoRepopsitory.findOne({ where: { id } });
+    if (!statusUpdate) {
+      throw new Error('Not found');
+    }
+
+    statusUpdate.status = status;
+    return await this.todoRepopsitory.save(statusUpdate);
+  }
+
   async deleteTodo(id: number): Promise<void> {
     await this.todoRepopsitory.delete(id);
   }

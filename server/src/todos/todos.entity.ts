@@ -9,5 +9,5 @@ export class Todo {
   todo: string;
 
   @Column()
-  status: string;
+  status: 'Pending' | 'In Progress' | 'Done';
 }

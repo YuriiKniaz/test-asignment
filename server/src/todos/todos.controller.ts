@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { Todo } from './todos.entity';
 
@@ -14,6 +22,14 @@ export class TodosController {
   @Post()
   async createOne(@Body() todo: Todo): Promise<Todo> {
     return await this.todoService.createTodo(todo);
+  }
+
+  @Put(':id')
+  async statusUpdate(
+    @Param('id') id: number,
+    @Body('status') status: 'Pending' | 'In Progress' | 'Done',
+  ): Promise<Todo> {
+    return await this.todoService.updateStatus(id, status);
   }
 
   @Delete(':id')
